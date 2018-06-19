@@ -9,6 +9,8 @@
  * https://sailsjs.com/config/bootstrap
  */
 
+const request = require('request');
+
 module.exports.bootstrap = async function(done) {
 
   // By convention, this is a good place to set up fake data during development.
@@ -29,6 +31,29 @@ module.exports.bootstrap = async function(done) {
 
   // Don't forget to trigger `done()` when this bootstrap function's logic is finished.
   // (otherwise your server will never lift, since it's waiting on the bootstrap)
+
+  setInterval(
+    () => {
+      console.log('Enviar datos');
+
+      const objetoRequest = {
+        url: 'http://localhost:1338/Pulsacion',
+        form: {
+          nombreRapsberry: 'Lolita',
+          usuarioIdFK:4
+        }
+      };
+      request
+        .post(objetoRequest,
+          (err, respuesta, body) => {
+            console.log('err', err);
+            console.log('respuesta', respuesta);
+            console.log('body', body);
+
+          })
+    }
+    , 10000);
+
   return done();
 
 };
